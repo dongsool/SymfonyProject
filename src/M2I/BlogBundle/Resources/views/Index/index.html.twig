@@ -6,13 +6,12 @@
         <div class="content-grid-info">
             <img src="{{ asset('images/post'~random('123')~'.jpg') }}" alt=""/>
             <div class="post-info">
-                <h4><a href="{{ path('m2_i_blog_detail_article', {'idArticle': article.id}) }}">{{ article.title }}</a>  
-                    {{ article.createDate | date("d/m/Y") }} / 27 Comments 
-                    <a href="{{ path('m2_i_blog_edit_article', {'idArticle': article.id}) }}">Edit</a>
-                    <a href="{{ path('m2_i_blog_delete_article', {'idArticle': article.id}) }}">Delete</a>
-                </h4>
+                <h4><a href="{{ path('m2_i_blog_detail_article', {'idArticle': article.id}) }}">{{ article.title }}</a>
+                    {{ article.createDate | date("d/m/Y") }} / 27 Comments</h4>
                 <p>{{ article.description }}</p>
-                <a href="{{ path('m2_i_blog_detail_article', {'idArticle': article.id}) }}"><span></span>READ MORE</a> 
+                <a href="{{ path('m2_i_blog_detail_article', {'idArticle': article.id}) }}"><span></span>READ MORE</a>
+                <a href="{{ path('m2_i_blog_edit_article', {'idArticle': article.id}) }}"><span></span>EDIT</a>
+                <a href="{{ path('m2_i_blog_delete_article', {'idArticle': article.id}) }}"><span></span>DELETE</a>
             </div>
         </div>
     {% endfor %}

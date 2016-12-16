@@ -3,7 +3,9 @@
 namespace M2I\BlogBundle\Controller;
 
 use M2I\BlogBundle\Entity\Article;
+use M2I\BlogBundle\Entity\Commentaire;
 use M2I\BlogBundle\Form\ArticleType;
+use M2I\BlogBundle\Form\CommentaireType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -92,13 +94,13 @@ class IndexController extends Controller
         $em = $this->container->get('doctrine.orm.entity_manager');
 
         // on recupere le repository de Article
-        $articleRepository = $em->getRepository('M2IBlogBundle:Article'); 
+        $articleRepository = $em->getRepository('M2IBlogBundle:Article');
         $toUpdateArticle = $articleRepository->findOneById(1);
 
         // modification de mon Article avec l'id 1
         $toUpdateArticle->setTitle('new title 2');
 
-        // On persist l'entity Article 
+        // On persist l'entity Article
         // Modification ou creation
         // persist va gerer la request sql
         $em->persist($toUpdateArticle);
@@ -134,13 +136,45 @@ class IndexController extends Controller
     	return $this->render('M2IBlogBundle:Index:about.html.twig');
     }
 
-    public function detailAction($idArticle)
+    public function detailAction($idArticle, Request $request)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
-        $articleRepository = $em->getRepository('M2IBlogBundle:Article');        
 
-        $article = $articleRepository->findOneById($idArticle);
+        $articleRepository = $em->getRepository('M2IBlogBundle:Article');
 
-        return $this->render('M2IBlogBundle:Index:detail.html.twig', array('article' => $article));
-    }
+        $article = $articleRepository->findOneById($idArticle);//dump($article);
+
+        $commentaire = new Commentaire;
+        //dump($commentaire);//die();
+
+        //$article->addCommentaire($commentaire);
+//        $commentaire->setArticle($article);dump($article);
+  //      dump($commentaire);die();
+
+        $form = $this
+            ->container
+            ->get('form.factory')
+            ->create(CommentaireType::class, $commentaire);
+            //dump($form);die();
+            // On fait le lien Requête <-> Formulaire
+            // À partir de maintenant, la variable $article contient les valeurs entrées dans le formulaire par le visiteur
+            // On vérifie que les valeurs entrées sont correctes
+            // (Nous verrons la validation des objets en détail dans le prochain chapitre)
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+            $em = $this->container->get('doctrine.orm.entity_manager');
+            $article->addCommentaire($commentaire);
+            //$commentaire->setArticle($article);//dump($commentaire);die();
+            $em->persist($commentaire);
+            $em->flush();
+
+
+        return $this->redirectToRoute('m2_i_blog_homepage');
+      }
+      //die();
+
+    return $this->render('M2IBlogBundle:Index:detail.html.twig',
+                         array('form' => $form->createView(),'article' => $article)
+                        );
+  }
 }
