@@ -2,15 +2,17 @@
 
 {% block body %}
  <div class="content-grid">
-        <div class="content-grid-info">
-            <img src="{{ asset('images/post'~random('123')~'.jpg') }}" alt=""/>
-            <div class="post-info">
-                <h4><a href="single.html">{{ article.title }}</a>
-                    {{ article.createDate | date("d/m/Y") }} / 27 Comments</h4>
-                <p>{{ article.description }}</p>
-                <a href="single.html"><span></span>READ MORE</a>
-            </div>
-        </div>
-        {{ form(form) }}
- </div>
+    <div class="content-grid-info">
+    <img src="{{ asset(article.image.url) }}" alt="{{ article.image.alt }}"/>
+      <div class="post-info">
+        <h4><a href="index.html.twig">{{ article.title }}</a>
+        {{ article.createDate | date }} / 27 Comments</h4>
+        <p>{{ article.description }}</p>
+        {% for commentaire in article.commentaires %}
+        <a>Auteur: {{ commentaire.auteurFirstName }}<br>{{commentaire.commentaire}}</a><br>
+        {% endfor %}
+        <a href="{{ path('m2_i_blog_add_commentaire_article', {'idArticle': article.id}) }}"><span></span>AJOUTER UN COMMENTAIRE</a>
+      </div>
+    </div>
+  </div>
 {% endblock %}

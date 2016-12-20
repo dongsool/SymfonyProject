@@ -10,6 +10,9 @@ m2_i_blog_aboutpage:
 m2_i_blog_detail_article:
     path:    /detail/{idArticle}
     defaults: { _controller: M2IBlogBundle:Index:detail }
+m2_i_blog_add_commentaire_article:
+    path:    /commentaire/add/{idArticle}
+    defaults: { _controller: M2IBlogBundle:Index:addCommentaire }
 m2_i_blog_add_article:
     path:    /article/add
     defaults: { _controller: M2IBlogBundle:Index:add }

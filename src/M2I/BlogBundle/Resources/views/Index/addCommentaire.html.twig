@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+ <div class="content-grid">
+    <div class="content-grid-info">
+        <img src="{{ asset('images/post'~random('123')~'.jpg') }}" alt=""/>
+        <div class="post-info">
+            <h4><a href="{{ path('m2_i_blog_detail_article', {'idArticle': article.id}) }}">{{ article.title }}</a>
+                {{ article.createDate | date("d/m/Y") }} / 27 Comments</h4>
+            <p>{{ article.description }}</p>
+            {% for commentaire in article.commentaires %}
+            <a>Auteur: {{ commentaire.auteurFirstName }} {{commentaire.commentaire}}</a><br>
+            {% endfor %}<br>
+            <a href="{{ path('m2_i_blog_detail_article', {'idArticle': article.id}) }}"><span></span>READ MORE</a>
+        </div>
+    </div>
+    {{ form(form) }}
+ </div>
+{% endblock %}

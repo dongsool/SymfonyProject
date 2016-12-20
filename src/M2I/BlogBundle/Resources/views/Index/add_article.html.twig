@@ -1,5 +1,12 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-	{{ form(form) }}
+<div class="content-grid">
+  <div class="content-grid-info">
+   <div class="post-info">
+   <h2>Ajout d'article</h2><br>
+      {{ form(form) }}
+   </div>
+  </div>
+</div>
 {% endblock %}

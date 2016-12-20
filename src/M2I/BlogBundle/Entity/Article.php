@@ -4,6 +4,7 @@ namespace M2I\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Article
  *
@@ -43,9 +44,11 @@ class Article
     private $createDate;
 
     /**
-     * @ORM\OneToOne(targetEntity="M2I\BlogBundle\Entity\Image", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="M2I\BlogBundle\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
+
+
 
     /**
      * @ORM\OneToMany(targetEntity="M2I\BlogBundle\Entity\Commentaire", mappedBy="article")
@@ -158,24 +161,19 @@ class Article
     {
         return $this->image;
     }
-/*
-    public function __construct()
-    {
-      $this->commentaires =  new ArrayCollection();
-    }
-*/
+
     /**
      * Add commentaires
      *
      * @param \M2I\BlogBundle\Entity\Commentaire $commentaires
      * @return Article
      */
-    public function addCommentaire(\M2I\BlogBundle\Entity\Commentaire $commentaire)
+    public function addCommentaires(\M2I\BlogBundle\Entity\Commentaire $commentaires)
     {
-        $this->commentaires[] = $commentaire;
+        $this->commentaires[] = $commentaires;
 
         // On lie l'annonce a la candidature
-        $commentaire->setArticle($this);
+        $commentaires->setArticle($this);
 
         return $this;
     }
@@ -185,7 +183,7 @@ class Article
      *
      * @param \M2I\BlogBundle\Entity\Commentaire $commentaires
      */
-    public function removeCommentaire(\M2I\BlogBundle\Entity\Commentaire $commentaires)
+    public function removeCommentaires(\M2I\BlogBundle\Entity\Commentaire $commentaires)
     {
         $this->commentaires->removeElement($commentaires);
     }

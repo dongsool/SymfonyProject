@@ -4,7 +4,9 @@
  <div class="content-grid">
     {% for article in articleList %}
         <div class="content-grid-info">
-            <img src="{{ asset('images/post'~random('123')~'.jpg') }}" alt=""/>
+            {% if article.image %}
+            <img src="{{ asset(article.image.url) }}" alt="{{ article.image.alt }}"/>
+            {% endif %}
             <div class="post-info">
                 <h4><a href="{{ path('m2_i_blog_detail_article', {'idArticle': article.id}) }}">{{ article.title }}</a>
                     {{ article.createDate | date("d/m/Y") }} / 27 Comments</h4>

@@ -5,23 +5,16 @@ namespace M2I\BlogBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class ArticleType extends AbstractType
+class ImageType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-        ->add('title', TextType::class)
-        ->add('description', TextareaType::class)
-        ->add('image', ImageType::class)
-        ->add('save', SubmitType::class);
+        $builder->add('file', FileType::class);
     }
 
     /**
@@ -30,7 +23,7 @@ class ArticleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'M2I\BlogBundle\Entity\Article'
+            'data_class' => 'M2I\BlogBundle\Entity\Image'
         ));
     }
 
@@ -39,7 +32,7 @@ class ArticleType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'm2i_blogbundle_article';
+        return 'm2i_blogbundle_image';
     }
 
 
