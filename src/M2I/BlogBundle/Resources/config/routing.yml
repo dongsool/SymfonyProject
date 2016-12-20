@@ -9,19 +9,19 @@ m2_i_blog_aboutpage:
     defaults: { _controller: M2IBlogBundle:Index:about }
 m2_i_blog_detail_article:
     path:    /detail/{idArticle}
-    defaults: { _controller: M2IBlogBundle:Index:detail }
+    defaults: { _controller: M2IBlogBundle:Article:detail }
 m2_i_blog_add_commentaire_article:
     path:    /commentaire/add/{idArticle}
     defaults: { _controller: M2IBlogBundle:Index:addCommentaire }
 m2_i_blog_add_article:
     path:    /article/add
-    defaults: { _controller: M2IBlogBundle:Index:add }
+    defaults: { _controller: M2IBlogBundle:Article:add }
 m2_i_blog_edit_article:
     path:    /article/edit/{idArticle}
-    defaults: { _controller: M2IBlogBundle:Index:editArticle }
+    defaults: { _controller: M2IBlogBundle:Article:editArticle }
 m2_i_blog_delete_article:
     path:    /article/delete/{idArticle}
-    defaults: { _controller: M2IBlogBundle:Index:deleteArticle }
+    defaults: { _controller: M2IBlogBundle:Article:deleteArticle }
 test:
     path:    /test
     defaults: { _controller: M2IBlogBundle:Index:test }

@@ -1,20 +1,46 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/security.html
 security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
 
+    role_hierarchy:
+        ROLE_USER: ROLE_USER
+        ROLE_AUTHOR: [ROLE_USER, ROLE_AUTHOR]
+        ROLE_ADMIN: [ROLE_AUTHOR, ROLE_MODERATEUR, ROLE_USER]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    user: { password: userpass, roles: [ 'ROLE_USER'] }
+                    author: { password: authorpass, roles: [ 'ROLE_AUTHOR'] }
+                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN'] }
+                    superadmin: { password: superadminpass, roles: [ 'ROLE_SUPER_ADMIN'] }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
+        # Creation of a firewall only for this form
+        main_login:
+            # This RegExp allows us to only take /login (but not /login_check)
+            pattern: ^/login$
+            anonymous: true # We allows anonymous user on this firewall
         main:
-            anonymous: ~
+            pattern: ^/
+            anonymous: true
+            provider:
+            form_login:
+                login_path: login
+                check_path: login_check
+            logout:
+                path: logout
+                target: /login
+    access_control:
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
             # activate different ways to authenticate
 
             # http_basic: ~

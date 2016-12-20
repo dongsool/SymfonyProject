@@ -57,7 +57,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <li class="active"><a href="{{ path('m2_i_blog_homepage') }}">HOME</a></li>
                         <li><a href="{{ path('m2_i_blog_aboutpage') }}">ABOUT</a></li>
                         <li><a href="{{ path('m2_i_blog_contactpage') }}">CONTACT</a></li>
+                        {% if is_granted('ROLE_AUTHOR') %}
                         <li><a href="{{ path('m2_i_blog_add_article') }}">CREER UN ARTICLE</a></li>
+                        {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                        <li><a href="{{ path('login') }}">LOGIN</a></li>
+                        <li><a href="{{ path('login') }}">SIGN IN</a></li>
+                        {% endif %}
                         <div class="clearfix"> </div>
                  </ul>
              </div>
